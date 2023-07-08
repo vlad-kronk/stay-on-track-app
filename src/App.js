@@ -4,7 +4,7 @@ import './App.css';
 
 function App() {
 
-  const [timerProp, setTimerProp] = useState();
+  const [timerProp, setTimerProp] = useState(0);
   const [hours, setHours] = useState('');
   const [minutes, setMinutes] = useState('');
   const [seconds, setSeconds] = useState('');
@@ -30,14 +30,16 @@ function App() {
     }
   }
 
-  const setTimerSubmit = () => {
-    const secondsMilli = parseInt(seconds) * 100;
-    const minutesMilli = parseInt(minutes) * 60 * 100;
-    const hoursMilli = parseInt(hours) * 60 * 60 * 100;
+  const setTimerSubmit = (e) => {
+
+    e.preventDefault();
+
+    const secondsMilli = seconds !== '' ? parseInt(seconds) * 100 : 0;
+    const minutesMilli = minutes !== '' ? parseInt(minutes) * 60 * 100 : 0;
+    const hoursMilli = hours !== '' ? parseInt(hours) * 60 * 60 * 100 : 0;
 
     setTimerProp(secondsMilli + minutesMilli + hoursMilli);
   }
-
 
   return (
     <div className="App">
@@ -68,7 +70,7 @@ function App() {
           placeholder='seconds'
         >
         </input>
-        <button type="button" onClick={setTimerSubmit}>Set!</button>
+        <button type="submit" onClick={setTimerSubmit}>Set!</button>
       </form>
 
       <Timer value={timerProp} />
