@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
+import Timer from './components/Timer';
 import './App.css';
 
 function App() {
 
-  const [timer, setTimer] = useState('');
+  const [timerProp, setTimerProp] = useState();
   const [hours, setHours] = useState('');
   const [minutes, setMinutes] = useState('');
   const [seconds, setSeconds] = useState('');
@@ -34,58 +35,43 @@ function App() {
     const minutesMilli = parseInt(minutes) * 60 * 100;
     const hoursMilli = parseInt(hours) * 60 * 60 * 100;
 
-    setTimer(secondsMilli + minutesMilli + hoursMilli);
+    setTimerProp(secondsMilli + minutesMilli + hoursMilli);
   }
 
-  const milliToString = (milli) => {
-    const afterHours = milli % 360000;
-    const afterMinutes = afterHours % 6000;
-    const afterSeconds = afterMinutes % 100;
-    const hoursStr = `${(milli - afterHours) / 360000}`
-    const minutesStr = `${(afterHours - afterMinutes) / 6000}`
-    const secondsStr = `${(afterMinutes - afterSeconds) / 100}`
-
-    return `${hoursStr}:${minutesStr}:${secondsStr}`
-  }
-
-  const cancelTimer = () => {
-
-  }
 
   return (
     <div className="App">
       <header>
         <h2>Stay On Track</h2>
-
-        <form>
-          <input
-            name='hours'
-            value={hours}
-            onChange={updateForm}
-            placeholder='hours'
-          >
-          </input>
-          <input
-            name='minutes'
-            value={minutes}
-            onChange={updateForm}
-            placeholder='minutes'
-          >
-          </input>
-          <input
-            name='seconds'
-            value={seconds}
-            onChange={updateForm}
-            placeholder='seconds'
-          >
-          </input>
-          <button type="button" onClick={setTimerSubmit}>Set!</button>
-        </form>
-
-        <p>{milliToString(timer)}</p>
-
-        <button type="button" onClick={cancelTimer}>End timer</button>
       </header>
+
+
+      <form>
+        <input
+          name='hours'
+          value={hours}
+          onChange={updateForm}
+          placeholder='hours'
+        >
+        </input>
+        <input
+          name='minutes'
+          value={minutes}
+          onChange={updateForm}
+          placeholder='minutes'
+        >
+        </input>
+        <input
+          name='seconds'
+          value={seconds}
+          onChange={updateForm}
+          placeholder='seconds'
+        >
+        </input>
+        <button type="button" onClick={setTimerSubmit}>Set!</button>
+      </form>
+
+      <Timer value={timerProp} />
     </div>
   );
 }
